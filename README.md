@@ -20,7 +20,7 @@
 > http port 8080 으로 serve
 
 ## DB 관련
-- SQL 스키마는 `src/main/resources/schema.sql` 참고 [링크](https://github.com/hanwix2/Review-and-Mileage-Service/src/main/resources/schema.sql)
+- SQL 스키마는 `src/main/resources/schema.sql` 참고 [링크](https://github.com/hanwix2/Review-and-Mileage-Service/blob/main/src/main/resources/schema.sql)
 - Embedded 모드이므로 서버 재실행시 모든 데이터가 초기화됨
 - 서버 실행 후 추가적인 설치과정 없이 H2 콘솔(url 접속)로 DB 확인 가능
   > http://localhost:8080/h2-console
