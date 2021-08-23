@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rms.review_and_mileage_service.mapper.MileageMapper">
+
+    <insert id="recordMileageLogs">
+        INSERT INTO mileage_record(user_id, review_id, content, amount, time)
+        VALUES
+        <foreach collection="mileagePosts" item="mileagePost" separator=",">
+            (
+            #{mileagePost.user_id},
+            #{mileagePost.review_id},
+            #{mileagePost.content},
+            #{mileagePost.amount},
+            NOW()
+            )
+        </foreach>
+    </insert>
+
+    <insert id="recordMileage" parameterType="com.rms.review_and_mileage_service.model.MileagePost" >
+        INSERT INTO mileage_record(user_id, review_id, content, amount, time)
+        VALUES
+        (
+        #{mileagePost.user_id},
+        #{mileagePost.review_id},
+        #{mileagePost.content},
+        #{mileagePost.amount},
+        NOW()
+        )
+    </insert>
+
+    <select id="getMileages" resultType="com.rms.review_and_mileage_service.model.MileageRecord">
+        SELECT id, review_id, content, amount, time
+        FROM mileage_record
+        WHERE user_id = #{user_id}
+    </select>
+
+    <select id="getMileagesSumByReview" resultType="int">
+        SELECT SUM(amount)
+        FROM mileage_record
+        WHERE user_id = #{user_id} AND review_id = #{review_id}
+    </select>
+
+</mapper>

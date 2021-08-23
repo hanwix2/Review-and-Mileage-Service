@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rms.review_and_mileage_service.mapper.ReviewMapper">
+
+    <insert id="addReview" parameterType="com.rms.review_and_mileage_service.model.ReviewPost" keyProperty="id">
+        INSERT INTO review(place_id, user_id, content, create_time, update_time)
+        VALUES(#{place_id}, #{user_id}, #{content}, NOW(), NOW())
+    </insert>
+
+    <select id="getReviews" resultType="com.rms.review_and_mileage_service.model.ReviewResponse">
+        SELECT id, place_id, user_id, content, create_time, update_time
+        FROM review
+        <if test="place_id != null">
+            WHERE place_id = #{place_id}
+        </if>
+    </select>
+
+    <select id="isUserReviewExists" parameterType="map" resultType="boolean">
+        SELECT EXISTS
+        (
+        SELECT *
+        FROM review
+        WHERE place_id = #{place_id} AND user_id = #{user_id}
+        )
+    </select>
+
+    <select id="isReviewExists" resultType="boolean">
+        SELECT EXISTS
+        (
+        SELECT *
+        FROM review
+        WHERE place_id = #{place_id}
+        )
+    </select>
+
+    <insert id="addReviewImages" parameterType="map">
+        INSERT INTO review_image(review_id, image_path)
+        VALUES
+        <foreach collection="reviewImages" item="reviewImage" separator=",">
+            (
+            #{reviewImage.review_id},
+            #{reviewImage.image}
+            )
+        </foreach>
+    </insert>
+
+    <select id="getUserReview" resultType="com.rms.review_and_mileage_service.model.ReviewResponse">
+        SELECT id, place_id, user_id, content, create_time, update_time
+        FROM review
+        WHERE id = #{review_id} AND user_id = #{user_id}
+    </select>
+
+    <select id="getReviewImages" resultType="com.rms.review_and_mileage_service.model.ReviewImageResponse">
+        SELECT id, review_id, image_path
+        FROM review_image
+        WHERE review_id = #{review_id}
+    </select>
+
+    <update id="editReview">
+        UPDATE review
+        SET content = #{content}, update_time = NOW()
+        WHERE id = #{review_id}
+    </update>
+
+    <delete id="deleteReview" parameterType="int">
+        DELETE FROM review
+        WHERE id = #{review_id}
+    </delete>
+
+</mapper>
