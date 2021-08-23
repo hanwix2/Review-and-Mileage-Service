@@ -42,11 +42,12 @@ pw: k5w87w
 
 ## 유의 사항
 - id 값은 숫자로 대체 (RequestBody(JSON)로 넘기는 값은 String으로 입력)
-  > AutoIncrement 적용
-  > String -> int 형변환 오류에 대한 처리 생략
+  > AutoIncrement 적용  
+  > String -> int 형변환 오류에 대한 처리 생략  
 
 - 로그인, 회원가입 등 user 관련 api는 생략 
-  > 로그인을 하지 않고 전달된 userId로 유저 구분 / 기타 authentication 기능 생략
+  > 로그인을 하지 않고 전달된 userId로 유저 구분  
+  > authentication 기능 생략
 
 - 리뷰 관련 추가, 수정, 삭제 API를 하나로 사용함에 따른 유의점
   - ADD, MOD일 경우 - attachedPhotoId 는 새로운 사진을 등록하는 것이므로 id 값이 아닌 파일명으로 값을 받음
