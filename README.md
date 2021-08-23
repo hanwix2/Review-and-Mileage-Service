@@ -1,17 +1,17 @@
 # Review-and-Mileage-Service
 트리플 서버개발 사전 과제 2. 트리플 여행자 클럽 마일리지 서비스
 
-## 프로젝트 개요
+## 🏷 프로젝트 개요
 트리플 사용자들이 여행 장소에 리뷰를 작성할 때 포인트를 부여하고, 전체/개인에 대한 포인트 부여 히스토리와 개인별 누적 포인트를 관리하는 서비스.  
 
-## 개발 환경
+## 🏷 개발 환경
 - **Java 8**
 - **Spring Boot 2.5.4**
 - **Maven**
 - **MyBatis**
 - DB: **H2** (Mode: MySQL)
 
-## 빌드 및 실행 방법
+## 🏷 빌드 및 실행 방법
 ### Maven Command
 ```
 1. mvn package -DskipTests
@@ -19,7 +19,7 @@
 ```
 > http port 8080 으로 serve
 
-## DB 관련
+## 🏷 DB 관련
 - SQL 스키마는 `src/main/resources/schema.sql` 참고 [링크](https://github.com/hanwix2/Review-and-Mileage-Service/blob/main/src/main/resources/schema.sql)
 - Embedded 모드이므로 서버 재실행시 모든 데이터가 초기화됨
 - 서버 실행 후 추가적인 설치과정 없이 H2 콘솔(url 접속)로 DB 확인 가능
@@ -40,7 +40,7 @@ pw: k5w87w
 ![image](https://user-images.githubusercontent.com/70831990/130379841-afcc93e7-c350-465a-a88c-84f6bb0a9dbb.png)
 ![image](https://user-images.githubusercontent.com/70831990/130379879-dc20f77f-0a5f-4354-9777-ae8145de756a.png)  
 
-## 유의 사항
+## 🏷 유의 사항
 - id 값은 숫자로 대체 (RequestBody(JSON)로 넘기는 값은 String으로 입력)
   > AutoIncrement 적용  
   > String -> int 형변환 오류에 대한 처리 생략  
@@ -57,7 +57,7 @@ pw: k5w87w
 
 - 리뷰 레코드 수가 많지 않으므로 리뷰 조회시 페이징은 적용하지 않음
 
-## API 요청 예시
+## 🏷 API 요청 예시
 
 <br> 
 
@@ -220,3 +220,9 @@ pw: k5w87w
     }
 ]
 ```
+
+## 🏷 예외 처리
+- `action` 값이 [ADD, MOD, DELETE] 이외의 요청이 올 경우 - **InvalidEventActionException**
+- User(id)가 존재하지 않는 경우 - **UserNotFoundException**
+- 리뷰 수정 또는 삭제 요청시 RequestBody로 보낸 리뷰 정보가 본인이 적은 리뷰와 상이할 경우 - **ReviewNotFoundException**
+- 동일한 유저가 특정 장소에 두개 이상의 리뷰를 작성하려고 하는 경우 - **ReviewDuplicateException**
