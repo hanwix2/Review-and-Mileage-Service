@@ -17,14 +17,14 @@
         </foreach>
     </insert>
 
-    <insert id="recordMileage" parameterType="com.rms.review_and_mileage_service.model.MileagePost" >
+    <insert id="recordMileage" parameterType="com.rms.review_and_mileage_service.model.MileagePost">
         INSERT INTO mileage_record(user_id, review_id, content, amount, time)
         VALUES
         (
-        #{mileagePost.user_id},
-        #{mileagePost.review_id},
-        #{mileagePost.content},
-        #{mileagePost.amount},
+        #{user_id},
+        #{review_id},
+        #{content},
+        #{amount},
         NOW()
         )
     </insert>

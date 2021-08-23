@@ -68,4 +68,9 @@
         WHERE id = #{review_id}
     </delete>
 
+    <delete id="deleteReviewImage">
+        DELETE FROM review_image
+        WHERE id = #{review_id}
+    </delete>
+
 </mapper>

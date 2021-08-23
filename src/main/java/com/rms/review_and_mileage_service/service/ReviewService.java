@@ -43,18 +43,22 @@ public class ReviewService {
     private int addReview(ReviewPost review) {
         int review_id = reviewMapper.addReview(review);
 
-        if (review.getImages().size() > 0) {
+        addReviewImages(review_id, review.getImages());
+
+        return review_id;
+    }
+
+    private void addReviewImages(int review_id, List<String> images) {
+        if (images.size() > 0) {
 
             List<ReviewImage> reviewImages = new ArrayList<>();
 
-            for (String image : review.getImages()) {
+            for (String image : images) {
                 reviewImages.add(new ReviewImage(review_id, image));
             }
 
             reviewMapper.addReviewImages(reviewImages);
         }
-
-        return review_id;
     }
 
     private void checkDuplicationReview(int place_id, int user_id) {
@@ -90,23 +94,19 @@ public class ReviewService {
             throw new ReviewNotFoundException();
         }
 
-        List<ReviewImageResponse> images = reviewMapper.getReviewImages(review.getReview_id());
+        int review_id = review.getReview_id();
+
+        List<ReviewImageResponse> images = reviewMapper.getReviewImages(review_id);
 
         List<String> modImages = eventRequest.getAttachedPhotoIds();
 
         mileageService.calcMileageInReviewImageMod(images.size(), modImages.size(), review, user_id);
 
-        reviewMapper.editReview(review.getReview_id(), eventRequest.getContent());
+        reviewMapper.editReview(review_id, eventRequest.getContent());
 
-        List<Integer> delImages = new ArrayList<>();
+        reviewMapper.deleteReviewImage(review_id);
 
-//        for (ReviewImageResponse img : images) {
-//            for ()
-//        }
-//
-////        ReviewPost review = getReviewPostFromEvntReq(eventRequest);
-
-
+        addReviewImages(review_id, modImages);
 
     }
 

@@ -29,4 +29,6 @@ public interface ReviewMapper {
 
     void deleteReview(int review_id);
 
+    void deleteReviewImage(int review_id);
+
 }
